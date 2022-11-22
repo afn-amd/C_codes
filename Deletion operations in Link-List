@@ -1,0 +1,172 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+
+struct Node
+{
+	int data;
+	struct Node* next;
+};
+
+struct Node *first=NULL;
+struct Node *last=NULL;
+
+void display()
+{
+	struct Node *i;
+	i=first;
+	printf("\nIN LIST\n");
+	while(i!=NULL)
+	{
+		if(i==last)
+		printf(" | %d | %u | ",i->data,i->next);
+		else
+		printf(" | %d | %u | ->",i->data,i->next);
+		i=i->next;
+	}
+}
+
+void insert(int n)
+{
+	struct Node *newNode;
+	newNode=(struct Node*)malloc(sizeof(struct Node));
+	newNode->data=n;
+	newNode->next=NULL;
+	if(first==NULL)
+	first=last=newNode;
+	else
+	{
+		last->next=newNode;
+		last=newNode;
+	}
+	display();
+}
+
+void deleteFirst()
+{
+	struct Node *i;
+	i=first;
+	if(first==last)
+	{
+		free(i);
+		first=last=NULL;
+	}
+	else
+	{
+		first=first->next;
+		i->next=NULL;
+		free(i);
+		display();
+	}
+}
+
+void deleteLast()
+{
+	struct Node *i,*j;
+	j=last;
+	i=first;
+	if(i==j)
+	{
+		free(i);
+		first=last=NULL;
+	}
+	else
+	{
+		while(i!=last)
+		{
+			if(i->next==last)
+			break;
+			i=i->next;
+		}
+		last=i;
+		i->next=NULL;
+		free(j);
+		display();
+	}
+}
+
+void deleteParticular(int posdata)
+{
+	struct Node *i,*j;
+	j=first;
+	i=NULL;
+	if(posdata==first->data)
+	deleteFirst();
+	else if(posdata==last->data)
+	deleteLast();
+	else
+	{
+		while(j!=NULL)
+		{
+			i=j->next;
+			if(i->data==posdata)
+			break;
+			j=j->next;
+		}
+		if(j==NULL)
+		printf("\nNo such element exists\n");
+		else
+		{
+			j->next=i->next;
+			i->next=NULL;
+			free(i);
+			display();	
+		}
+	}
+}
+
+int main()
+{
+	int n,posdata;
+	char ch;
+	printf("\n1 for Insert\n2 for Delete First\n3 for Delete Last\n4 for Delete Particular\n5 for Exit\n");
+	while(1)
+	{
+		printf("\nEnter_");
+		ch=getche();
+		if(ch=='1')
+		{
+			printf("\nEnter data to insert :: ");
+			scanf("%d",&n);
+			insert(n);
+		}
+		else if(ch=='2')
+		{
+			if(first==NULL)
+			{
+				printf("\nList is Empty\n");
+				continue;
+			}
+			deleteFirst();
+		}
+		else if(ch=='3')
+		{
+			if(first==NULL)
+			{
+				printf("\nList is Empty\n");
+				continue;
+			}
+			deleteLast();
+		}
+		else if(ch=='4')
+		{
+			if(first==NULL)
+			{
+				printf("\nList is Empty\n");
+				continue;
+			}
+			printf("\nEnter which data you want to remove :: ");
+			scanf("%d",&posdata);
+			deleteParticular(posdata);
+		}
+		else if(ch=='5')
+		{
+			printf("\nTHANKS FOR USING\n");
+			break;
+		}
+		else
+		printf("\nWRONG CHOICE");
+	}
+	getch();
+	return 0;
+}
