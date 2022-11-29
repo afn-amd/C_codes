@@ -1,0 +1,102 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+
+typedef struct Node
+{
+	int data;
+	struct Node *next;
+}block;
+
+struct Node *first=NULL;
+struct Node *last=NULL;
+struct Node *rFirst=NULL;
+struct Node *rLast=NULL;
+
+void insert(int n)
+{
+	struct Node *newNode;
+	newNode=(block*)malloc(sizeof(block));
+	newNode->data=n;
+	newNode->next=NULL;
+	if(first==NULL)
+	first=last=newNode;
+	else
+	{
+		last->next=newNode;
+		last=newNode;
+	}
+}
+
+void display(struct Node *s)
+{
+	struct Node *i;
+	i=s;
+	while(i!=NULL)
+	{
+		if(i==last)
+		printf(" | %d | %u | \n",i->data,i->next);
+		else
+		printf(" | %d | %u | ->",i->data,i->next);
+		i=i->next;
+	}
+}
+
+void reverse()
+{
+	rFirst=last;
+	struct Node *i;
+	i=first;
+	while(1)
+	{
+		if(i->next==last)
+		{
+			last->next=i;
+			last=i;
+			i=first;
+		}
+		else if(last==first)
+		{
+			last->next=NULL;
+			rLast=last;
+			break;
+		}
+		else
+		i=i->next;
+	}
+	display(rFirst);
+}
+
+int main()
+{
+	int n;
+	char ch;
+	printf("\n1 for Insert\n2 for Display\n3 for Reverse Display");
+	while(1)
+	{
+		printf("\nEnter :: ");
+		ch=getche();
+		if(ch=='1')
+		{
+			printf("\nEnter element :: ");
+			scanf("%d",&n);
+			insert(n);
+		}
+		else if(ch=='2')
+		{
+			printf("\n\nYour List :: ");
+			display(first);
+		}
+		else if(ch=='3')
+		{
+			printf("\n\nReverse List :: ");
+			reverse();
+			printf("\nThanks for using!!!\n");
+			break;
+		}
+		else
+		printf("\nWrong Choice!!!\n");
+	}
+	getch();
+	return 0;
+}
