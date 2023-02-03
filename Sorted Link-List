@@ -1,0 +1,91 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+
+struct Node
+{
+	int data;
+	struct Node *next;
+};
+
+struct Node *first=NULL;
+struct Node *last=NULL;
+
+void insertSort(int n)
+{
+	struct Node *newNode;
+	newNode=(struct Node*)malloc(sizeof(struct Node));
+	newNode->data=n;
+	newNode->next=NULL;
+	if(first==NULL)
+	first=last=newNode;
+	else if(n<first->data)
+	{
+		newNode->next=first;
+		first=newNode;
+	}
+	else if(n>last->data)
+	{
+		last->next=newNode;
+		last=newNode;
+	}
+	else if(n>first->data && n<last->data)
+	{
+		struct Node *i,*j;
+		i=first;
+		j=i->next;
+		while(1)
+		{
+			if(j->data>n)
+			break;
+			else
+			{
+				i=j;
+				j=j->next;
+			}
+		}
+		newNode->next=j; 
+		i->next=newNode;
+	}
+}
+
+void display()
+{
+	struct Node *i;
+	i=first;
+	printf("\n");
+	while(i!=NULL)
+	{
+		printf(" | %d | ",i->data);
+		i=i->next;
+	}
+}
+
+int main()
+{
+	int n;
+	char ch;
+	printf("1 for Insert\n2 for Display\n3 for Exit");
+	while(1)
+	{
+		printf("\nEnter :: ");
+		ch=getche();
+		if(ch=='1')
+		{
+			printf("\nEnter to insert :: ");
+			scanf("%d",&n);
+			insertSort(n);
+		}
+		else if(ch=='2')
+		display();
+		else if(ch=='3')
+		{
+			printf("\nThanks for using!!!\n");
+			break;
+		}
+		else
+		printf("\nWRONG CHOICE\n");
+	}
+	getch();
+	return 0;
+}
