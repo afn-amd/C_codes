@@ -1,0 +1,92 @@
+#include<stdio.h>
+#include<conio.h>
+void printBox(char a[3][3])
+{
+	int i,j;
+	system("CLS");
+	for(i=0;i<3;i++)
+	{
+		printf("\t");
+		for(j=0;j<3;j++)
+		{
+			if(a[i][j]!='x'&&a[i][j]!='o')
+			a[i][j]='_';
+			printf("\t%c",a[i][j]);
+		}
+		printf("\n");
+	}
+}
+void fill(char a[3][3],char n,char c)
+{
+	if(n=='1')
+	a[0][0]=c;
+	if(n=='2')
+	a[0][1]=c;
+	if(n=='3')
+	a[0][2]=c;
+	if(n=='4')
+	a[1][0]=c;
+	if(n=='5')
+	a[1][1]=c;
+	if(n=='6')
+	a[1][2]=c;
+	if(n=='7')
+	a[2][0]=c;
+	if(n=='8')
+	a[2][1]=c;
+	if(n=='9')
+	a[2][2]=c;
+	printBox(a);
+}
+int main()
+{
+	int i,count=0;
+	char box[3][3]={{'1','2','3'},{'4','5','6'},{'7','8','9'}},c,n1[20],n2[20];
+	printf("Enter player 1 name :: ");
+	gets(n1);
+	printf("Enter player 2 name :: ");
+	gets(n2);
+	printf("\n\tNumbers of Index\n");
+	printf("\t----------------\n");
+	for(i=1;i<10;i++)
+	{
+		printf("\t%d",i);
+		if(i%3==0)
+		printf("\n\n");
+	}
+	printf("Respective player needs to give choice as per index above...\n\n");
+	game:
+	printf("\n%s's turn>>>",n1);
+	c=getche();
+	count++;
+	printf("\n");
+	fill(box,c,'o');
+	if((box[0][0]=='o'&&box[0][1]=='o'&&box[0][2]=='o') || (box[1][0]=='o'&&box[1][1]=='o'&&box[1][2]=='o') || (box[2][0]=='o'&&box[2][1]=='o'&&box[2][2]=='o') || (box[0][0]=='o'&&box[1][0]=='o'&&box[2][0]=='o') || (box[0][1]=='o'&&box[1][1]=='o'&&box[2][1]=='o') || (box[0][2]=='o'&&box[1][2]=='o'&&box[2][2]=='o') || (box[0][0]=='o'&&box[1][1]=='o'&&box[2][2]=='o') || (box[0][2]=='o'&&box[1][1]=='o'&&box[2][0]=='o'))
+	{
+		printf("\n%s won!!!",n1);
+		return;
+	}
+	if(count==9)
+	{
+		printf("\n!!<<Tie>>!!");
+		return;
+	}
+	printf("\n%s's turn>>>",n2);
+	c=getche();
+	count++;
+	printf("\n");
+	fill(box,c,'x');
+	if((box[0][0]=='x'&&box[0][1]=='x'&&box[0][2]=='x') || (box[1][0]=='x'&&box[1][1]=='x'&&box[1][2]=='x') || (box[2][0]=='x'&&box[2][1]=='x'&&box[2][2]=='x') || (box[0][0]=='x'&&box[1][0]=='x'&&box[2][0]=='x') || (box[0][1]=='x'&&box[1][1]=='x'&&box[2][1]=='x') || (box[0][2]=='x'&&box[1][2]=='x'&&box[2][2]=='x') || (box[0][0]=='x'&&box[1][1]=='x'&&box[2][2]=='x') || (box[0][2]=='x'&&box[1][1]=='x'&&box[2][0]=='x')) 
+	{
+		printf("\n%s won!!!",n2);
+		return;
+	}
+	if(count==9)
+	{
+		printf("\n!!<<Tie>>!!");
+		return;
+	}
+	goto game;
+	getch();
+	return 0;
+}
